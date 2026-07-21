@@ -19,7 +19,15 @@ main()
 // } 
 require("dotenv").config();
 
-await mongoose.connect(process.env.MONGO_URL);
+main()
+  .then(() => {
+    console.log("Connection successful");
+  })
+  .catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect(process.env.MONGO_URL);
+}
 
 app.set("views",path.join(__dirname,"/views"));
 app.set("view engine","ejs");
