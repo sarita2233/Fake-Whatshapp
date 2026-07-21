@@ -1,34 +1,26 @@
 const PORT = process.env.PORT || 8080;
 
-const express =require("express");
-const app =express();
-const mongoose = require("mongoose");
-const path =require("path");
-const Chat =require("./models/chat.js");
-const methodOverride =require("method-override");
-const expressError =require("./ExpressError");
-
-main()
-.then(() =>{
- console.log("connection sucessfull");
-})
-.catch(err => console.log(err));
-
-// async function main() {
-// await mongoose.connect("mongodb://127.0.0.1:27017/FakeWhatshapp");  
-// } 
+const express = require("express");
+const app = express();
 require("dotenv").config();
+
+const mongoose = require("mongoose");
+const path = require("path");
+const Chat = require("./models/chat.js");
+const methodOverride = require("method-override");
+const ExpressError = require("./ExpressError");
 
 main()
   .then(() => {
     console.log("Connection successful");
   })
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.log(err);
+  });
 
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
 }
-
 app.set("views",path.join(__dirname,"/views"));
 app.set("view engine","ejs");
 app.use(express.static(path.join(__dirname,"views/public")));
@@ -134,6 +126,6 @@ let{status=500,message= "Some error Occured"}=err;
 res.status(status).send(message);
 });
 
- app.listen(8080,() =>{
-console.log("server is listening on port 8080");
-  });
+ app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
