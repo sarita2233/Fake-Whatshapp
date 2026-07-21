@@ -1,3 +1,5 @@
+const PORT = process.env.PORT || 8080;
+
 const express =require("express");
 const app =express();
 const mongoose = require("mongoose");
@@ -10,11 +12,14 @@ main()
 .then(() =>{
  console.log("connection sucessfull");
 })
-.catch(err => console.log(errr));
+.catch(err => console.log(err));
 
-async function main() {
-await mongoose.connect("mongodb://127.0.0.1:27017/FakeWhatshapp");  
-} 
+// async function main() {
+// await mongoose.connect("mongodb://127.0.0.1:27017/FakeWhatshapp");  
+// } 
+require("dotenv").config();
+
+await mongoose.connect(process.env.MONGO_URL);
 
 app.set("views",path.join(__dirname,"/views"));
 app.set("view engine","ejs");
